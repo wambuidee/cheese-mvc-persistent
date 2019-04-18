@@ -77,7 +77,7 @@ public class MenuController {
 
         AddMenuItemForm form = new AddMenuItemForm(cheeseDao.findAll(),menu);
 
-        model.addAttribute("title", "Add Item to Menu:" + menu.getName());
+        model.addAttribute("title", "Add Cheese to Menu:" + menu.getName());
         model.addAttribute("form", form);
         return "menu/add-item";
     }
