@@ -54,11 +54,14 @@ public class MenuController {
     public String viewMenu (Model model, @PathVariable int menuId){
 
         Menu menu = menuDao.findOne(menuId);
+        model.addAttribute("title", "Menu : "+ menu.getName());
         model.addAttribute("menu", menu);
 
-        /*Per video the name, ID, and list of cheeses are each passed in
-        separately to the view. Passing in the full Menu object as above is more efficient.
 
+        /*Per video the name, ID, and list of cheeses are each passed in
+        separately to the view. Passing in the full Menu object as above is more efficient.*/
+
+        /*Menu menu = menuDao.findOne(menuId);
         model.addAttribute("title", menu.getName());
         model.addAttribute("cheeses", menu.getCheeses());
         model.addAttribute("menuId", menu.getId());*/
@@ -70,16 +73,17 @@ public class MenuController {
     public String addItem (Model model, @PathVariable int menuId){
 
         Menu menu = menuDao.findOne(menuId);
+        Iterable<Cheese> cheeses = cheeseDao.findAll();
 
-        AddMenuItemForm form = new AddMenuItemForm(cheeseDao.findAll(), menu);
+        AddMenuItemForm form = new AddMenuItemForm(menu, cheeses);
 
-        model.addAttribute("form", form);
         model.addAttribute("title", "Add Item to Menu:" + menu.getName());
+        model.addAttribute("form", form);
         return "menu/add-item";
     }
 
     @RequestMapping(value = "add-item", method = RequestMethod.POST)
-    public String addItem (Model model, @ModelAttribute @Valid AddMenuItemForm form, Errors errors){
+    public String addItem (Model model, @Valid AddMenuItemForm form, Errors errors){
 
         if(errors.hasErrors()){
             model.addAttribute("form", form);

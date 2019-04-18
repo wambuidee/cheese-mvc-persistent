@@ -11,13 +11,13 @@
 
         <ul>
             <li th:each="menu : ${menus}">
-                <a th:href="'/menu/view/' + ${menu.id}}" th:text="${menu.name}"></a>
+                <a th:href="'/menu/view/' + ${menu.id}" th:text="${menu.name}"></a>
             </li>
 
         </ul>
 
 
-
+        <p><a href="/menu/add">Add Menu</a></p>
 
     </body>
 </html>
